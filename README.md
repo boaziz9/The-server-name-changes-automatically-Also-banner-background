@@ -26,3 +26,4 @@ If you have any issues or questions of how to code a specific command, you can:
 
 - Join my discord server [here](https://discord.gg/slt3)
 
+https://youtu.be/czLNiC6eF7A
