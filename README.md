@@ -1,63 +1,117 @@
-<div align="center">
-	<br />
-	<p>
-		<a href="https://discord.py.org"><img src="https://discord.py.org/static/logo.svg" width="546" alt="discord.py" /></a>
-	</p>
-	<br />
-	<p>
-		<a href="https://discord.gg/djs"><img src="https://img.shields.io/discord/222078108977594368?color=5865F2&logo=discord&logoColor=white" alt="Discord server" /></a>
-		<a href="https://www.npmjs.com/package/discord.js"><img src="https://img.shields.io/npm/v/discord.js.svg?maxAge=3600" alt="npm version" /></a>
-		<a href="https://www.npmjs.com/package/discord.js"><img src="https://img.shields.io/npm/dt/discord.js.svg?maxAge=3600" alt="npm downloads" /></a>
-		<a href="https://github.com/discordjs/discord.js/actions"><img src="https://github.com/discordjs/discord.js/actions/workflows/test.yml/badge.svg" alt="Tests status" /></a>
-		<a href="https://codecov.io/gh/discordjs/discord.js" ><img src="https://codecov.io/gh/discordjs/discord.js/branch/main/graph/badge.svg?precision=2" alt="Code coverage" /></a>
-	</p>
-	<p>
-		<a href="https://vercel.com/?utm_source=discordjs&utm_campaign=oss"><img src="https://raw.githubusercontent.com/discordjs/discord.js/main/.github/powered-by-vercel.svg" alt="Vercel" /></a>
-		<a href="https://www.cloudflare.com"><img src="https://raw.githubusercontent.com/discordjs/discord.js/main/.github/powered-by-workers.png" alt="Cloudflare Workers" height="44" /></a>
-	</p>
-</div>
+discord.py
+==========
 
-## About
+.. image:: https://discord.com/api/guilds/336642139381301249/embed.png
+   :target: https://discord.gg/r3sSKJJ
+   :alt: Discord server invite
+.. image:: https://img.shields.io/pypi/v/discord.py.svg
+   :target: https://pypi.python.org/pypi/discord.py
+   :alt: PyPI version info
+.. image:: https://img.shields.io/pypi/pyversions/discord.py.svg
+   :target: https://pypi.python.org/pypi/discord.py
+   :alt: PyPI supported Python versions
 
-This repository contains multiple packages with separate [releases][github-releases]. You can find the assembled Discord API wrapper at [`discord.js`][source]. It is a powerful [Node.js](https://nodejs.org/en) module that allows you to easily interact with the [Discord API](https://discord.com/developers/docs/intro).
+A modern, easy to use, feature-rich, and async ready API wrapper for Discord written in Python.
 
-## Packages
+Key Features
+-------------
 
-- `discord.js` ([source][source]) - A powerful Node.js module for interacting with the Discord API
-- `@discordjs/brokers` ([source][brokers-source]) - A collection of brokers for use with discord.js
-- `@discordjs/builders` ([source][builders-source]) - A utility package for easily building Discord API payloads
-- `@discordjs/collection` ([source][collection-source]) - A powerful utility data structure
-- `@discordjs/core` ([source][core-source]) - A thinly abstracted wrapper around the core components of the Discord API
-- `@discordjs/formatters` ([source][formatters-source]) - A collection of functions for formatting strings
-- `@discordjs/proxy` ([source][proxy-source]) - A wrapper around `@discordjs/rest` for running an HTTP proxy
-- `@discordjs/rest` ([source][rest-source]) - A module for interacting with the Discord REST API
-- `@discordjs/voice` ([source][voice-source]) - A module for interacting with the Discord Voice API
-- `@discordjs/util` ([source][util-source]) - A collection of utility functions
-- `@discordjs/ws` ([source][ws-source]) - A wrapper around Discord's gateway
+- Modern Pythonic API using ``async`` and ``await``.
+- Proper rate limit handling.
+- Optimised in both speed and memory.
 
-## Links
+Installing
+----------
 
-- [Website][website] ([source][website-source])
-- [Documentation][documentation]
-- [Guide][guide] ([source][guide-source])
-  Also see the v13 to v14 [Update Guide][guide-update], which includes updated and removed items from the library.
-- [discord.js Discord server][discord]
-- [Discord API Discord server][discord-api]
-- [GitHub][source]
-- [npm][npm]
-- [Related libraries][related-libs]
+**Python 3.8 or higher is required**
 
-### Extensions
+To install the library without full voice support, you can just run the following command:
 
-- [RPC][rpc] ([source][rpc-source])
+.. code:: sh
 
-## Contributing
+    # Linux/macOS
+    python3 -m pip install -U discord.py
 
-Please read through our [contribution guidelines][contributing] before starting a pull request. We welcome contributions of all kinds, not just code! If you're stuck for ideas, look for the [good first issue][good-first-issue] label on issues in the repository. If you have any questions about the project, feel free to ask them on [Discord][discord]. Before creating your own issue or pull request, always check to see if one already exists! Don't rush contributions, take your time and ensure you're doing it correctly.
+    # Windows
+    py -3 -m pip install -U discord.py
 
-## Help
+Otherwise to get voice support you should run the following command:
 
-If you don't understand something in the documentation, you are experiencing problems, or you just need a gentle nudge in the right direction, please join our [Discord server][discord].
+.. code:: sh
 
-[Discord]: https://discord.gg/slt3
+    # Linux/macOS
+    python3 -m pip install -U "discord.py[voice]"
 
+    # Windows
+    py -3 -m pip install -U discord.py[voice]
+
+
+To install the development version, do the following:
+
+.. code:: sh
+
+    $ git clone https://github.com/Rapptz/discord.py
+    $ cd discord.py
+    $ python3 -m pip install -U .[voice]
+
+
+Optional Packages
+~~~~~~~~~~~~~~~~~~
+
+* `PyNaCl <https://pypi.org/project/PyNaCl/>`__ (for voice support)
+
+Please note that when installing voice support on Linux, you must install the following packages via your favourite package manager (e.g. ``apt``, ``dnf``, etc) before running the above commands:
+
+* libffi-dev (or ``libffi-devel`` on some systems)
+* python-dev (e.g. ``python3.8-dev`` for Python 3.8)
+
+Quick Example
+--------------
+
+.. code:: py
+
+    import discord
+
+    class MyClient(discord.Client):
+        async def on_ready(self):
+            print('Logged on as', self.user)
+
+        async def on_message(self, message):
+            # don't respond to ourselves
+            if message.author == self.user:
+                return
+
+            if message.content == 'ping':
+                await message.channel.send('pong')
+
+    intents = discord.Intents.default()
+    intents.message_content = True
+    client = MyClient(intents=intents)
+    client.run('token')
+
+Bot Example
+~~~~~~~~~~~~~
+
+.. code:: py
+
+    import discord
+    from discord.ext import commands
+
+    intents = discord.Intents.default()
+    intents.message_content = True
+    bot = commands.Bot(command_prefix='>', intents=intents)
+
+    @bot.command()
+    async def ping(ctx):
+        await ctx.send('pong')
+
+    bot.run('token')
+
+You can find more examples in the examples directory.
+
+Links
+------
+
+- `Documentation <https://discordpy.readthedocs.io/en/latest/index.html>`_
+- `Official Discord Server <https://discord.gg/r3sSKJJ>`_
+- `Discord API <https://discord.gg/discord-api>`_
